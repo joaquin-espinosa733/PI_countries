@@ -1,0 +1,21 @@
+.container {
+    background-color: darkgrey;
+    border-radius: 10px;
+    width: 140px;
+    height: 250px;
+    margin: 20px;
+    padding: 10px;
+    position: relative;
+    perspective: 1000px;
+    box-shadow: 0 0 10px black;
+    &:hover{
+        box-shadow: 0 0 10px blue;
+    }
+}
+
+.container img {
+    border-radius: 50px;
+    width: 140px;
+    box-shadow: 0 5px 5px black;
+    margin-top: 5px;
+}

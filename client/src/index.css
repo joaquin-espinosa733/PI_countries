@@ -12,6 +12,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  background-image: url("https://t4.ftcdn.net/jpg/01/24/15/73/360_F_124157303_k3qXPQWZG1buQ36vrksTwcaDngpXGGsr.jpg");
+  background-size: cover;
 }
 
 a {

@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 
 
 const getCountries = async()=>{
-    // await Country.destroy({ where: {} });// con esta linea, cuando haga una nueva peticion a la api, se va a resetear los datos que estan dentro de la base de datos(esto es de prueba)
+    await Country.destroy({ where: {} });// con esta linea, cuando haga una nueva peticion a la api, se va a resetear los datos que estan dentro de la base de datos(esto es de prueba)
     const allCountries = await axios.get("http://localhost:5000/countries");
     const resultados = allCountries.data; // Me traigo toda la data con los paises
     const traigoTodo = resultados.map( element=>({//mapeo la data que me trae todos los paises y sacar la info que necesito

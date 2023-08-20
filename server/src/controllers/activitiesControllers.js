@@ -1,30 +1,38 @@
 const axios = require("axios");
 const {Activity,Country} = require("../db");
-const{getCountrieById} = require("./getCountries")
 
 
-const activitiesPost = async({
+
+const activitiesPost = async ({
     id,
     name,
     difficulty,
     season,
     countryIds
 }) => {
-    const crearActividad = await Activity.create({
+    const nuevaActividad = await Activity.create({
         id: id,
         name: name,
         difficulty: difficulty,
         season: season
     });
 
-    // Agregar los países relacionados
     if (countryIds && countryIds.length > 0) {
-        const countries = await Promise.all(countryIds.map(countryId => getCountrieById(countryId)));
-        await crearActividad.addCountry(countries);
+        const countries = await Country.findAll({
+            where: { id: countryIds },
+        });
+
+        await nuevaActividad.setCountries(countries); // Usamos setCountries en lugar de addCountries
     }
 
-    return crearActividad;
+    // Ahora buscamos la actividad recién creada con la relación a países
+    const actividadConPaises = await Activity.findByPk(nuevaActividad.id, {
+        include: Country, // Incluimos la relación con países
+    });
+
+    return actividadConPaises;
 }
+
 
 
 const allActivities = async()=>{
