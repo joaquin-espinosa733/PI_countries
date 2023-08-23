@@ -8,19 +8,19 @@ export default function Card({coun}){
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
     const handleDetailClick=()=>{
         dispatch(getCountriesDetail(id));
         navigate(`/detail/${id}`)
     };
 
     return(
-        <div 
-        className={style.container} 
-        onClick={handleDetailClick}
-        >
+    <div className={style.container} onClick={handleDetailClick}>
         <img src={flags}/>
-        <h3>name: {name}</h3>
-        <p>Region: {region}</p>
+        <div className={style.texto}>
+            <h3>name: {name}</h3>
+            <h4>Region: {region}</h4>
         </div>
+    </div>
     )
 }

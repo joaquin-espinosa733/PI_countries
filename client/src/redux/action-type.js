@@ -2,3 +2,5 @@ export const GET_COUNTRIES = "GET_COUNTRIES";
 export const GET_DETAIL_COUNTRIES = "GET_DETAIL_COUNTRIES";
 export const GET_ACTIVITY = "GET_ACTIVITY";
 export const POST_ACTIVITY = "POST_ACTIVITY";
+export const SET_TOTAL_PAGES = "SET_TOTAL_PAGES";
+export const SET_PAGE = "SET_PAGE";

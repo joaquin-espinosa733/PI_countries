@@ -8,12 +8,14 @@ const activitiesPost = async ({
     name,
     difficulty,
     season,
+    duracion,
     countryIds
 }) => {
     const nuevaActividad = await Activity.create({
         id: id,
         name: name,
         difficulty: difficulty,
+        duracion: duracion,
         season: season
     });
 

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { getCountriesDetail } from "../../redux/action";
 import { Link } from "react-router-dom";
+import style from "./Detail.module.css"
 
 
 export default function Detail(){
@@ -18,8 +19,8 @@ export default function Detail(){
     const countries = state;
     
     return(
-        <div>
-            <img src={countries.flags} alt={countries.name} />
+        <div className={style.container}>
+            <img src={countries.flags} alt={countries.name} className={style.img}/>
             <p>id:{countries.id}</p>
             <p>name:{countries.name}</p>
             <p>Continente:{countries.region}</p>

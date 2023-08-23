@@ -11,7 +11,8 @@ export default function Home() {
     useEffect(()=>{
         dispatch(getCountries());
     },[dispatch]);
-     return(
+     
+    return(
         <div className={style.container}>
             <h1 className={style.container}>Home</h1>
             <Cards></Cards>

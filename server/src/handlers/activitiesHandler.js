@@ -11,8 +11,8 @@ const traerActivities = async(req,res)=>{
 
 const crearActividades = async(req,res)=>{
     try {
-        const {id,name,difficulty,season,countryIds} = req.body;
-        const  data= {id,name,difficulty,season,countryIds}
+        const {id,name,difficulty,season,duracion,countryIds} = req.body;
+        const  data= {id,name,difficulty,season,duracion,countryIds}
         const creacion = await activitiesPost(data);
         return res.status(200).json(creacion)
     } catch (error) {
