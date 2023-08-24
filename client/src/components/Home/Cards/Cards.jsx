@@ -12,22 +12,22 @@ export default function Cards() {
     const currentPage = useSelector((state)=> state.pagination.thisPage);
 
 
-    const [selectedContinent, setSelectedContinent] = useState('ALL');//estado local del filtrado de los contienentes.
-    const [selectedSorting, setSelectedSorting] = useState("default");//estado local del filtrado por "A"-"Z", "Z"-"A"
+    const [selectedContinent, setSelectedContinent] = useState('ALL');//! estado local del filtrado de los contienentes.
+    const [selectedSorting, setSelectedSorting] = useState("default");// !estado local del filtrado por "A"-"Z", "Z"-"A"
 
     const filteredCountries = selectedContinent === "ALL"
         ? countries
         : countries.filter(coun=> coun.region === selectedContinent);
 
-    const totalFilteredItems = filteredCountries.length;//sacamos cuantos paises vienen del filter.
-    const totalFilteredPages = Math.ceil(totalFilteredItems / itemsPerPage);//vamos a utilizar Math.ceil para devolver el entero mayor o igual entre la divicion de totalFilteredItems y itemsPerPage del estado global
-    const totalUsedPages = selectedContinent === 'ALL' ? totalPages : totalFilteredPages;//si selectedContinent es "ALL" utiliza totalPages del estado global y si es totalFilteredPages utiliza el estado local.
+    const totalFilteredItems = filteredCountries.length;  //* sacamos cuantos paises vienen del filter(250 paises).
+    const totalFilteredPages = Math.ceil(totalFilteredItems / itemsPerPage);  //* vamos a utilizar Math.ceil para devolver el entero mayor o igual entre la divicion de totalFilteredItems y itemsPerPage del estado global
+    const totalUsedPages = selectedContinent === 'ALL' ? totalPages : totalFilteredPages;  //* si selectedContinent es "ALL" utiliza totalPages del estado global que trae todos los paises y si es totalFilteredPages utiliza el estado local.
 
     const startIndex = (currentPage -1) * itemsPerPage;
     const endIndex = Math.min(startIndex + itemsPerPage, totalFilteredItems);
 
 
-
+    //! esta funcion va hacer el filtrado de ordenamiento de "A" a la "Z", De la "Z" a la "A", y de max y min poblacion del pais
     const sortCountries = (countries, sortOrder)=>{
         return countries.slice().sort((a,b)=>{
             switch (sortOrder){
@@ -63,7 +63,8 @@ export default function Cards() {
     return (
             <div className={style.cardsContainer}>
             <div>
-                <select onChange={(e)=> handleFilterChange(e.target.value)}>
+                {/*onChange es un evento en js y se ejecuta una funcion que especificas, en este caso, pasamos una call back y que cuando se ejecute "handleFilterChange" valla a la propiedad e.target.value y realize el filtro del continente que le pido. */}
+                <select className={style.filters} onChange={(e)=> handleFilterChange(e.target.value)}>
                     <option value="ALL">ALL</option>
                     <option value="Asia">ASIA</option>
                     <option value="Americas">AMERICAS</option>
@@ -71,9 +72,10 @@ export default function Cards() {
                     <option value="Antarctic">ANTARCTIC</option>
                     <option value="Europe">EUROPE</option>
                     <option value="Oceania">OCEANIA</option>
+                    <option value="">ACTIVIDAD</option>
                 </select>
 
-                <select value={selectedSorting} onChange={(e)=> setSelectedSorting(e.target.value)}>
+                <select className={style.filter} value={selectedSorting} onChange={(e)=> setSelectedSorting(e.target.value)}>
                     <option value="default">default</option>
                     <option value="A">A-Z</option>
                     <option value="Z">Z-A</option>
@@ -81,18 +83,20 @@ export default function Cards() {
                     <option value="MIN">min population</option>
                 </select>
             </div>
-            {
+            <div className={style.cardsContainer}>
+                 {
                 sortCountries(filteredCountries, selectedSorting)
                 ?.slice(startIndex, endIndex).map((coun) => {
                     return(<Card key={coun.id} coun={coun} />);
                 })
             }
-            <div>
-            <button onClick={()=> handlePageChange(currentPage - 1)}> Previous </button>
+            </div>
+            <div className={style.pagination}>
+            <button className={style.button} onClick={()=> handlePageChange(currentPage - 1)}> Previous </button>
             <p>
                 Page {currentPage} of {totalFilteredPages}
             </p>
-            <button onClick={()=> handlePageChange(currentPage + 1)}>Next</button>
+            <button className={style.button} onClick={()=> handlePageChange(currentPage + 1)}>Next</button>
             </div>
         </div>
     );

@@ -1,18 +1,20 @@
 .bootonn {
     margin: 2px 2px 0 0;
     border-radius: 3px;
+    border: 1px solid black;
     width: 105px;
     height: 25px;
     margin-top: -1px;
     font-size: 14px;
     line-height: 5px;
     background-color: #fdb731;
-    color: blue;
-    box-shadow: 0 2px 2px black;
+    color: black;
+    /* box-shadow: 0 2px 2px black; */
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     &:hover {
-        background-color: #fca61e;
-        color: #fbff00;
-        box-shadow: 2px 2px 2px #f65f3e;
+        color: #272727;
+        text-shadow: none;
+        background-color: beige;
     }
 }
 

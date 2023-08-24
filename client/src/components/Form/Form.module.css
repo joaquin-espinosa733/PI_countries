@@ -1,0 +1,38 @@
+.container{
+    background-color: #daa520;
+    padding: 20px;
+    width: 1000px;
+}
+
+.letra{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.countryList{
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.countryLabel {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.errors {
+    color: red;
+}
+
+.button {
+    border-radius: 5px;
+    background-color: gray;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    &:hover{
+        color: #272727;
+        text-shadow: none;
+        background-color: beige;
+    }
+}

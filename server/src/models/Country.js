@@ -31,11 +31,11 @@ module.exports = (sequelize) => {
     },
     subregion:{
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     area:{
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     }
   },{
     tableName: 'country', // Especifica el nombre de la tabla

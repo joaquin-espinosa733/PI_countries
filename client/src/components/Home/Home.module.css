@@ -1,11 +1,11 @@
 .container{
-    background-color: #daa520
+    background-color: #daa520;
 }
 
 
 .container h1{
     /* background-color: blue; */
-    color: #005200;
+    color: black;
     font-family:"Segoe IU", sans-serif;
     margin: auto;
     background-position: center center;

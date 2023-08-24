@@ -8,7 +8,7 @@ export default function Nav() {
     <div className={style.container}>
     <SearchBar/>
     <NavLink className={style.Link} to={"/home"}>Home</NavLink>
-    <NavLink className={style.Link} to="/from">Create Activity</NavLink>
+    <NavLink className={style.Link2} to="/from">Create Activity</NavLink>
     </div>
   )
 }
