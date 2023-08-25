@@ -1,0 +1,6 @@
+filtro por nombre de las Actividades
+diseñado del detail y de la from page y tambien la lading page.
+error al recargar el form
+que no submitee cuando tenga inputs vacio o con errores
+si ya exite la actividad que no se caracteres
+

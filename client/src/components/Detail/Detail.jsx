@@ -16,11 +16,10 @@ export default function Detail(){
     },[dispatch,id]);
     
     const state = useSelector((state)=> state.detail);
-
+    console.log(state);
     
     const countries = state;
     const activities = countries.activities;
-
     
     return (
         <div className={style.container}>

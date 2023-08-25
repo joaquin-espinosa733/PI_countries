@@ -22,8 +22,8 @@ export default function validate(form){
     }
 
     //season
-    const season = "";
-    if (!["Verano", "Otoño", "Invierno", "Primavera"].includes(season)) {
+    const season = form.season;
+    if (!["Verano","Otoño","Invierno","Primavera"].includes(season)) {
         error.season = "No existe esa season";
       }
 

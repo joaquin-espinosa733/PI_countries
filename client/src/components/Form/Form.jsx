@@ -70,7 +70,6 @@ const handleSubmit = (event)=> {
     season: form.season,
     countryIds: form.countryIds,
   };
-  console.log(newActivity);
   dispatch(postActivity(newActivity));
   dispatch(getCountries());
   navigate("/home");
@@ -93,22 +92,25 @@ const handleSubmit = (event)=> {
         {errors.name && <p className={style.errors}>{errors.name}</p>}
     <div>
          <label>difficulty de la actividad:</label>
-         <input 
-         type="text"
-         value={form.difficulty} 
-         onChange={changeHandler}
-         name="difficulty"
-           />
+         <select name="difficulty" value={form.difficulty} onChange={changeHandler} >
+          <option value="defaul">asignar dificultad de la actividad</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+         </select>
     </div>
     {errors.difficulty && <p className={style.errors}>{errors.difficulty}</p>}
     <div>
       <label>season del country:</label>
-      <input 
-      type="text" 
-      value={form.season}
-      onChange={changeHandler}
-      name="season"  
-      />
+      <select name="season" value={form.season} onChange={changeHandler} >
+        <option value="default">selecciona una season valida</option>
+        <option value="Otoño">Otoño</option>
+        <option value="Verano">Verano</option>
+        <option value="Invierno">Invierno</option>
+        <option value="Primavera">Primavera</option>
+      </select>
     </div>
     {errors.season && <p className={style.errors}>{errors.season}</p>}
     <div>

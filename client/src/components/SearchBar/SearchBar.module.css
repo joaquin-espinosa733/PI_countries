@@ -4,7 +4,7 @@
     border: 1px solid black;
     width: 105px;
     height: 25px;
-    margin-top: -1px;
+    margin-top: 0px;
     font-size: 14px;
     line-height: 5px;
     background-color: #fdb731;
@@ -19,7 +19,7 @@
 }
 
 .inputt input {
-    margin-top: -1px;
+    margin-top: 0px;
 }
 
 .bar{
