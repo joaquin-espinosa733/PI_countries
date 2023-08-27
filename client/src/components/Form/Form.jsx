@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import {useNavigate} from "react-router-dom"
-import{getCountries, postActivity, getActivity} from "../../redux/action"
+import { useNavigate } from "react-router-dom"
+import { getCountries, postActivity, getActivity } from "../../redux/action"
 import Validations from "./Validations"
 import style from "./Form.module.css"
 
 export default function Form() {
-  const countries = useSelector((state)=> state.countries);
+  const countries = useSelector((state) => state.countries);//estado global donde contengo mis paises.
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-     useEffect(()=>{
-     dispatch(getActivity())
-   },[dispatch])
+  useEffect(() => {//me tragio mi action getActivity quien me trae la data de mis actividades creadas. y tambien getCountries que me trae todos los paises.
+    dispatch(getCountries())
+    dispatch(getActivity())
+  }, [dispatch])
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState({//creamos estado local donde guardamos la info que tiene nuestro posteo
     name: "",
     difficulty: "",
     duracion: "",
-    season:"",
-    countryIds:[]
+    season: "",
+    countryIds: []
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});// estado local que maneja los errores del form
 
-  const changeHandler = (event)=> {
+  const changeHandler = (event) => {// que me lo explique
     setForm({
       ...form,
       [event.target.name]: event.target.value,
@@ -32,113 +33,127 @@ export default function Form() {
     setErrors(
       Validations({
         ...form,
-        [event.target.name] : event.target.value,
-    })
-  );
-}
-
-
-const countrySelectedHandler = (event) => {
-  const selectedCountry = event.target.value;
-  const selectedCountrys = countries.find((country) => country.id === selectedCountry);
-
-  if (selectedCountrys) {
-    if (form.countryIds.includes(selectedCountrys.id)) { 
-      setForm({
-        ...form,
-        countryIds: form.countryIds.filter((id) => id !== selectedCountrys.id),
-      });
-    } else {
-      setForm({
-        ...form,
-        countryIds: [...form.countryIds, selectedCountrys.id], 
-      });
-    }
+        [event.target.name]: event.target.value,
+      })
+    );
   }
-};
 
 
+  const countrySelectedHandler = (event) => {// funcion para la seleccion de paises
+    const selectedCountry = event.target.value;
+    const selectedCountrys = countries.find((country) => country.id === selectedCountry);
 
-
-
-const handleSubmit = (event)=> {
-  event.preventDefault();
-  const newActivity = {
-    name: form.name,
-    difficulty: Number(form.difficulty),
-    duracion: Number(form.duracion),
-    season: form.season,
-    countryIds: form.countryIds,
+    if (selectedCountrys) {
+      if (form.countryIds.includes(selectedCountrys.id)) {
+        setForm({
+          ...form,
+          countryIds: form.countryIds.filter((id) => id !== selectedCountrys.id),
+        });
+      } else {
+        setForm({
+          ...form,
+          countryIds: [...form.countryIds, selectedCountrys.id],
+        });
+      }
+    }
   };
-  dispatch(postActivity(newActivity));
-  dispatch(getCountries());
-  navigate("/home");
-}
+
+
+
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (/*si el input esta vacio que no submitee */
+      form.name.length === 0 ||
+      form.difficulty.length === 0 ||
+      form.duracion.length === 0 ||
+      form.season.length === 0
+    ) {
+      return;
+    }
+
+    if (!errors.name && !errors.difficulty && !errors.duracion && !errors.season) { // si tiene errores que tampoco submitee
+      const newActivity = {
+        name: form.name,
+        difficulty: Number(form.difficulty),
+        duracion: Number(form.duracion),
+        season: form.season,
+        countryIds: form.countryIds,
+      };
+      dispatch(postActivity(newActivity));//hacemos un dispatch de nuestra action postActivity y le pasame la nueva actividad creada
+      dispatch(getCountries());//me traigo a mis countries
+      const navigateToHome = navigate("/home", { replace: true });// cuando submitee me manda al home
+      return navigateToHome;
+    }
+    return false;
+  };
+
+
 
 
   return (
     <div className={style.container}>
-    <h1 className={style.letra}>Formulario de Actividades</h1>
+      <h1 className={style.letra}>Formulario de Actividades</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name de la actividad:</label>
-          <input 
-          type="text"
-          value={form.name}
-          onChange={changeHandler}
-          name='name'
+          <input
+            type="text"
+            value={form.name}
+            onChange={changeHandler}
+            name='name'
           />
         </div>
         {errors.name && <p className={style.errors}>{errors.name}</p>}
-    <div>
-         <label>difficulty de la actividad:</label>
-         <select name="difficulty" value={form.difficulty} onChange={changeHandler} >
-          <option value="defaul">asignar dificultad de la actividad</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-         </select>
+        <div>
+          <label>difficulty de la actividad:</label>
+          <select name="difficulty" value={form.difficulty} onChange={changeHandler} >
+            <option value="defaul">asignar dificultad de la actividad</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+        {errors.difficulty && <p className={style.errors}>{errors.difficulty}</p>}
+        <div>
+          <label>season del country:</label>
+          <select name="season" value={form.season} onChange={changeHandler} >
+            <option value="default">selecciona una season valida</option>
+            <option value="Otoño">Otoño</option>
+            <option value="Verano">Verano</option>
+            <option value="Invierno">Invierno</option>
+            <option value="Primavera">Primavera</option>
+          </select>
+        </div>
+        {errors.season && <p className={style.errors}>{errors.season}</p>}
+        <div>
+          <label>duracion de la actividad:</label>
+          <input
+            type="text"
+            value={form.duracion}
+            name='duracion'
+            onChange={changeHandler}
+          />
+        </div>
+        {errors.duracion && <p className={style.errors}>{errors.duracion}</p>}
+        <div className={style.countryList}>
+          {countries.map((country) => (
+            <label key={country.id} className={style.countryLabel}>
+              <input
+                type="checkbox"
+                value={country.id}
+                checked={form.countryIds.includes(country.id)}
+                onChange={countrySelectedHandler}
+              />
+              {country.name}
+            </label>
+          ))}
+        </div>
+        <button className={style.button} type='submit'>SUBMIT</button>
+      </form>
     </div>
-    {errors.difficulty && <p className={style.errors}>{errors.difficulty}</p>}
-    <div>
-      <label>season del country:</label>
-      <select name="season" value={form.season} onChange={changeHandler} >
-        <option value="default">selecciona una season valida</option>
-        <option value="Otoño">Otoño</option>
-        <option value="Verano">Verano</option>
-        <option value="Invierno">Invierno</option>
-        <option value="Primavera">Primavera</option>
-      </select>
-    </div>
-    {errors.season && <p className={style.errors}>{errors.season}</p>}
-    <div>
-      <label>duracion de la actividad:</label>
-      <input 
-      type="text"
-      value={form.duracion}
-      name='duracion'
-      onChange={changeHandler}
-       />
-    </div>
-    {errors.duracion && <p className={style.errors}>{errors.duracion}</p>}
-    <div className={style.countryList}>
-    {countries.map((country) => (
-    <label key={country.id} className={style.countryLabel}>
-    <input
-      type="checkbox"
-      value={country.id}
-      checked={form.countryIds.includes(country.id)}
-      onChange={countrySelectedHandler}
-    />
-    {country.name}
-    </label>
-      ))}
-    </div>
-
-    <button className={style.button}type='submit'>SUBMIT</button>
-    </form>
-  </div>
   )
 }

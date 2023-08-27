@@ -1,4 +1,3 @@
-const axios = require("axios");
 const {Activity,Country} = require("../db");
 
 
@@ -11,34 +10,41 @@ const activitiesPost = async ({
     duracion,
     countryIds
 }) => {
-    const nuevaActividad = await Activity.create({
-        id: id,
-        name: name,
-        difficulty: difficulty,
-        duracion: duracion,
-        season: season
+    const alreadyActivities = await Activity.findOne({
+        where: {
+            name: name,
+        },
     });
 
-    if (countryIds && countryIds.length > 0) {
-        const countries = await Country.findAll({
-            where: { id: countryIds },
-        });
+    if (!alreadyActivities) {
+        const activity = await Activity.create({ id,name, difficulty, duracion, season })
+        await activity.addCountry(countryIds)
 
-        await nuevaActividad.setCountries(countries); // Usamos setCountries en lugar de addCountries
+        let activityWithCountry = await Activity.findOne({
+            where: {
+                name: name
+            },
+            attributes: {
+                exclude: ['updatedAt', 'createdAt'],
+            },
+            include: {
+                model: Country,
+                through: {
+                    attributes: []
+                }
+            }
+        })
+        return activityWithCountry
     }
+    const activityWithCountry = await nuevaActividad.addCountries(countryIds);
 
-    // Ahora buscamos la actividad recién creada con la relación a países
-    const actividadConPaises = await Activity.findByPk(nuevaActividad.id, {
-        include: Country, // Incluimos la relación con países
-    });
-
-    return actividadConPaises;
+    return activityWithCountry
 }
 
 
 
 const allActivities = async()=>{
-    const buscarActividades= await Activity.findAll();
+    const buscarActividades= await Activity.findAll({include: Country});
     return buscarActividades;
 }
 

@@ -1,11 +1,22 @@
 .container {
-    background-color: #daa520;
+    background-color: #0979b0;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
 }
 
 .img {
     max-width: 500px;
     border-radius: 5px;
+    border:  4px outset black;
+    display: flex;
+    justify-content:flex-start;
+}
+
+.parrafos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family:'Courier New', Courier, monospace;
+
 }

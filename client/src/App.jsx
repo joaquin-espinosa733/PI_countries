@@ -11,7 +11,7 @@ function App() {
   const location = useLocation();
   return (
     <>
-      <div className={style.container}>
+      <div className={location.pathname === "/" ? style.container : ""}>
         {location.pathname !== "/" && <Nav />}
         <div className={style.link}>
         <Routes>

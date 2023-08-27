@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getCountriesDetail } from "../../../redux/action";
 import style from "../Card/Card.module.css"
 
-export default function Card({id,flags,name,region}){
+export default function Card({id,flags,name,region,actividad}){
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -15,11 +15,11 @@ export default function Card({id,flags,name,region}){
 
     return(
     <div className={style.container} onClick={handleDetailClick}>
-        <img src={flags}/>
         <div className={style.texto}>
-            <h3>name: {name}</h3>
-            <h4>Region: {region}</h4>
+            <h2>{name}</h2>
+            <h3>{region}</h3>
         </div>
+        <img src={flags} alt={`${name} flag`}/>
     </div>
     )
 }

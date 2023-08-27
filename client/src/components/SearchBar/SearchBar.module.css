@@ -7,9 +7,8 @@
     margin-top: 0px;
     font-size: 14px;
     line-height: 5px;
-    background-color: #fdb731;
+    background-color: #0979b0;
     color: black;
-    /* box-shadow: 0 2px 2px black; */
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     &:hover {
         color: #272727;

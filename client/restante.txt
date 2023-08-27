@@ -1,6 +1,6 @@
-filtro por nombre de las Actividades
-diseñado del detail y de la from page y tambien la lading page.
+diseñado del detail y de la from page y tambien la lading page.// y diseño de las cards
 error al recargar el form
 que no submitee cuando tenga inputs vacio o con errores
-si ya exite la actividad que no se caracteres
+selec de activity no funciona el default
+aveces la pagina queda vacia
 

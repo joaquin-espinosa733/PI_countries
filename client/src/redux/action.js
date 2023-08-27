@@ -1,4 +1,13 @@
-import  {GET_COUNTRIES,GET_DETAIL_COUNTRIES,GET_ACTIVITY,POST_ACTIVITY, SET_TOTAL_PAGES,SET_PAGE} from "./action-type"
+import  {
+    GET_COUNTRIES,
+    GET_DETAIL_COUNTRIES,
+    GET_ACTIVITY,
+    POST_ACTIVITY, 
+    SET_TOTAL_PAGES,
+    SET_PAGE,
+    FILTER_ACTIVITIES,
+    FILTER_CONTINENTS
+} from "./action-type"
 import axios from "axios";
 
 
@@ -25,7 +34,7 @@ export const getCountriesDetail = (id)=> {
 
 export const getActivity =()=>{
     return async (dispatch)=>{
-        const response = await axios("http://localhost:3001/activities")
+        const response = await axios.get("http://localhost:3001/activities")
         const activity = response.data;
         dispatch({type: GET_ACTIVITY, payload: activity});
     };
@@ -36,6 +45,20 @@ export const postActivity = (form)=> {
         const response = await axios.post("http://localhost:3001/activities", form);
         const newActivity = response.data;
         dispatch({type:POST_ACTIVITY, payload: newActivity});
+    }
+}
+
+export const filterActivities = (payload)=> {
+    return {
+        type: FILTER_ACTIVITIES,
+        payload
+    }
+}
+
+export const filterContinents = (payload) =>{
+    return{
+        type: FILTER_CONTINENTS,
+        payload,
     }
 }
 
