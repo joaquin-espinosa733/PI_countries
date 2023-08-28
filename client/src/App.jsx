@@ -6,7 +6,6 @@ import Detail from './components/Detail/Detail';
 import Nav from "./components/Nav/Nav"
 import From from "./components/Form/Form"
 
-
 function App() {
   const location = useLocation();
   return (
@@ -28,5 +27,4 @@ function App() {
     </>
   )
 }
-
 export default App

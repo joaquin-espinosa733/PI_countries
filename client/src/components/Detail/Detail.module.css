@@ -25,11 +25,28 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-height: 400px;
 }
 
 .actividades{
     flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+
+.contenedor{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    border-radius: 3px;
+    transition: transform 2s;
+}
+
+.contenedor:hover{
+    transform: scale(1.01);
 }

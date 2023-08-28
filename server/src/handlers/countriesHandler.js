@@ -4,17 +4,17 @@ const allCoontruies = async (req, res) => {
   const { name } = req.query;
   try {
     if (name) {
-      //si nombre existe se le pide al controller que busque en db y en api
+      //si nombre existe se le pide al controller que busque en db
       const traerPorNombre = await getCountriesByName(name);
       if (traerPorNombre) {
-        return res.json(traerPorNombre);
-      } else {
-        return res.send(`${name} no fue encontrado`);
+        return res.status(200).json(traerPorNombre);
+      } else if(traerPorNombre === null){
+        return res.status(404).send(`${name} no fue encontrado`);
       }
     } else {
       // sino dame todo
       const allPaises = await getCountries();
-      return res.json(allPaises);
+      return res.status(200).json(allPaises);
     }
   } catch (error) {
     //manejo si hay un error

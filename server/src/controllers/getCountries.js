@@ -40,6 +40,9 @@ const getCountriesByName = async (name) => {
       through: { attributes: [] }
     }
   })
+  if(buscaElNombre.length === 0){
+    return null;
+  }
   return buscaElNombre
 }
 

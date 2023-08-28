@@ -39,7 +39,7 @@ export default function Form() {
   }
 
 
-  const countrySelectedHandler = (event) => {// funcion para la seleccion de paises
+  const countrySelectedHandler = (event) => {//* funcion para la seleccion de paises
     const selectedCountry = event.target.value;
     const selectedCountrys = countries.find((country) => country.id === selectedCountry);
 
@@ -69,12 +69,13 @@ export default function Form() {
     ) {
       return;
     }
-    if (form.countryIds.length === 0) { // Validación para países seleccionados
-      alert("Selecciona al menos un país antes de enviar el formulario.");//si no se selecciona alguno, larga una alert de que se tiene que seleccionar almenos un pais
+    if (form.countryIds.length === 0) { //* Validación para países seleccionados
+      alert("Selecciona al menos un país antes de enviar el formulario.");//! si no se selecciona alguno, larga una alert de que se tiene que seleccionar almenos un pais
       return;
     }
 
-    if (!errors.name && !errors.difficulty && !errors.duracion && !errors.season) { // si tiene errores que tampoco submitee
+    if (!errors.name && !errors.difficulty && !errors.duracion && !errors.season) { //* si tiene errores que tampoco submitee
+      alert(`se ha creado la nueva actividad ${form.name}`)//* alert cuando se cree la actividad correctamente
       const newActivity = {
         name: form.name,
         difficulty: Number(form.difficulty),
@@ -82,9 +83,9 @@ export default function Form() {
         season: form.season,
         countryIds: form.countryIds,
       };
-      dispatch(postActivity(newActivity));//hacemos un dispatch de nuestra action postActivity y le pasame la nueva actividad creada
-      dispatch(getCountries());//me traigo a mis countries
-      const navigateToHome = navigate("/home", { replace: true });// cuando submitee me manda al home
+      dispatch(postActivity(newActivity));//* hacemos un dispatch de nuestra action postActivity y le pasame la nueva actividad creada
+      dispatch(getCountries());//* me traigo a mis countries
+      const navigateToHome = navigate("/home", { replace: true });//* cuando submitee me manda al home
       return navigateToHome;
     }
     return false;

@@ -4,47 +4,51 @@ import style from "../Cards/Cards.module.css"
 import { useEffect, useState } from 'react';
 import { setPage, getActivity, filterActivities, filterContinents, getCountries } from '../../../redux/action';
 
+//!Componente funcional que va a renderizar todos los paises y ademas los filtrados y paginado
 export default function Cards() {
-
+    //* el useDispatch lo vamos a utilizar para modificar el estado de redux, para enviar una accion al store.
     const dispatch = useDispatch();
+    //* useSelector vamos a seleccionar porciones especificas del estado global y llevarlo a un componente funcional de react en este  caso Cards
     const countriesSorted = useSelector((state) => state.countriesSorted)
     const activity = useSelector((state) => state.activity);
     const countries = useSelector(state => state.countries);
     const itemsPerPage = useSelector((state) => state.pagination.itemsPerPage);
     const currentPage = useSelector((state) => state.pagination.thisPage);
 
-
-    // const [selectedContinent, setSelectedContinent] = useState('ALL');//! estado local del filtrado de los contienentes.
-    const [selectedSorting, setSelectedSorting] = useState("");//! estado local del filtrado por "A"-"Z", "Z"-"A"
-    const [selectedActivity, setSelectedActivity] = useState('default');
-
+    //* utilizamos use useState para añadir estados local a mi componente.
+    const [selectedSorting, setSelectedSorting] = useState("");//! estado local del filtrado por "A"-"Z", "Z"-"A".
+    const [selectedActivity, setSelectedActivity] = useState('');//! estado local para el filtrado de las actividades de los countries.
+    const [selectedContinent, setSelectedContinent] = useState("ALL");
+    //*useEffect lo vamos autilizar para manejar el ciclo de vida del componente perimitiendo realizar efectos secundarios, EJ= manipulacion del DOM.
     useEffect(() => {
         dispatch(setPage(1));
-        if (selectedActivity === 'default') {
-            dispatch(getCountries()); // Mostrar todos los países al principio
+        if (selectedActivity === '' || selectedActivity === "default") {
+            dispatch(getCountries()); //* Mostrar todos los países al principios si el value es default o string vacio.
         } else {
-            dispatch(filterActivities(selectedActivity, countries));
+            dispatch(filterActivities(selectedActivity));
         }
+        //*debe ejecutarse siempre que cualquiera de las siguientes dependencias cambien:
     }, [selectedActivity, dispatch])
 
     useEffect(() => {
-        dispatch(getActivity()); // Obtener actividades
+        dispatch(getActivity()); //* Obtener las actividades creadas
     }, [dispatch]);
-
 
     const filterByActivity = e => {
         const activity = e.target.value;
         setSelectedActivity(activity);
-        dispatch(setPage(1)); // Reiniciar la página
+        dispatch(setPage(1)); //* Reiniciar la página a la primer pagina
         if (activity === "default") {
-            dispatch(filterActivities('', countries)); // Mostrar todos los países al seleccionar "default"
+            dispatch(filterActivities('', countries)); //* Mostrar todos los países al seleccionar "default"
         } else {
-            dispatch(filterActivities(activity, countriesSorted)); // Aplicar filtro de actividad
+            dispatch(filterActivities(activity, countriesSorted)); //* Aplicar filtro de actividad
         }
     };
 
     const filterByContinent = e => {
-        dispatch(filterContinents(e.target.value, countries));
+        const continent = e.target.value;
+        setSelectedContinent(continent)
+        dispatch(filterContinents(continent, countries));
         dispatch(setPage(1));
     };
 
@@ -80,13 +84,19 @@ export default function Cards() {
         dispatch(setPage(updatedPage));
     }
 
-
+    const resetFilters = ()=> {
+        setSelectedSorting("");//* restablecer ordenamiento
+        setSelectedActivity("");//* restablecer actividad
+        setSelectedContinent("ALL");//* resetear el value del select de continent a "ALL"
+        dispatch(filterContinents("ALL")); //*
+        dispatch(setPage(1));//* reiniciar la pagina
+        }
 
     return (
         <div className={style.cardsContainer}>
             <div className={style.filtrados}>
                 {/*onChange es un evento en js y se ejecuta una funcion que especificas, en este caso, pasamos una call back y que cuando se ejecute "filterBycontinent" valla a la propiedad e.target.value y realize el filtro del continente que le pido. */}
-                <select className={style.filters} onChange={filterByContinent}>
+                <select className={style.filters} onChange={filterByContinent} value={selectedContinent}>
                     <option value="ALL" onClick={filterByContinent}>ALL</option>
                     <option value="Asia" onClick={filterByContinent}>ASIA</option>
                     <option value="Americas" onClick={filterByContinent}>AMERICAS</option>
@@ -101,8 +111,6 @@ export default function Cards() {
                         <option key={act.id} value={act.name}>{act.name}</option>
                     ))}
                 </select>
-
-
                 <select className={style.filter} value={selectedSorting} onChange={(e) => setSelectedSorting(e.target.value)}>
                     <option value="default">default</option>
                     <option value="A">A-Z</option>
@@ -113,11 +121,14 @@ export default function Cards() {
                     <option value="MAX">max population</option>
                     <option value="MIN">min population</option>
                 </select>
+                <div>
+                    <button className={style.button} onClick={resetFilters}>Reset filters</button>
+                </div>
             </div>
             <div className={style.cardsContainer}>
                 {
-                    sortCountries(countriesSorted, selectedSorting)//* se llama a la funcion sortCountries, con el array de paises filtrados
-                        .slice(startIndex, endIndex)//*despues de ordenar los paises, se utiliza slice para obtener un array que son los elementos que deben mostrarse en la pagina actual
+                    sortCountries(countriesSorted, selectedSorting)//* se llama a la funcion sortCountries, con el array de paises filtrados y el estado local de ordenamiento.
+                        .slice(startIndex, endIndex)//*despues de ordenar los paises, se utiliza slice para obtener un array que son los elementos que deben mostrarse en la pagina actual de principio asta el final
                         .map((coun) => //* y para terminar un map al array de paises ordenados y paginados
                             <Card
                                 key={coun.id}
@@ -129,7 +140,6 @@ export default function Cards() {
                                 population={coun.population}
                                 subregion={coun.subregion}
                                 area={coun.area}
-                            // actividad={coun.activity}
                             />)
                 }
             </div>

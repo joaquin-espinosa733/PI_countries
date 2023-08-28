@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { getCountriesDetail, getActivity } from "../../redux/action";
-import { Link } from "react-router-dom";
 import style from "./Detail.module.css"
 
 
@@ -28,7 +27,7 @@ export default function Detail() {
         <div className={style.parrafos}>
           <h2>CARACTERISTICAS:</h2>
           <p>diminutivo: {countries.id}</p>
-          <p>name: {countries.name}</p>
+          <p>nombre: {countries.name}</p>
           <p>Continente: {countries.region}</p>
           <p>Capital: {countries.capital}</p>
           <p>poblacion: {countries.population}</p>
@@ -39,8 +38,8 @@ export default function Detail() {
             <h2>actividades:</h2>
             {activities &&
               activities.map((activity) => (
-                <div key={activity.id}>
-                  <p>name: {activity.name}</p>
+                <div key={activity.id} className={style.contenedor}>
+                  <p>nombre: {activity.name}</p>
                   <p>difficulty: {activity.difficulty}</p>
                   <p>duracion: {activity.duracion}</p>
                   <p>season: {activity.season}</p>
