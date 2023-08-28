@@ -12,6 +12,8 @@
 }
 
 .filters{
+    background-color: gray;
+    color: white;
     display: flex;
     max-width: 90px;
     max-height: 20px;
@@ -19,10 +21,15 @@
     flex-direction: row;
     justify-content: space-between;
     border-radius: 5px;
+}
+.filters:hover{
+    border-color: white;
 }
 
 .filter{
     display: flex;
+    background-color: gray;
+    color: white;
     max-width: 90px;
     max-height: 20px;
     flex-wrap: wrap;
@@ -30,7 +37,9 @@
     justify-content: space-between;
     border-radius: 5px;
 }
-
+.filter:hover{
+    border-color: white;
+}
 .pagination-container{
     display: flex;
     justify-content: center;

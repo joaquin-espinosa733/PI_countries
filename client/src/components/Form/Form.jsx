@@ -59,9 +59,6 @@ export default function Form() {
   };
 
 
-
-
-
   const handleSubmit = (event) => {
     event.preventDefault();
     if (/*si el input esta vacio que no submitee */
@@ -70,6 +67,10 @@ export default function Form() {
       form.duracion.length === 0 ||
       form.season.length === 0
     ) {
+      return;
+    }
+    if (form.countryIds.length === 0) { // Validación para países seleccionados
+      alert("Selecciona al menos un país antes de enviar el formulario.");//si no se selecciona alguno, larga una alert de que se tiene que seleccionar almenos un pais
       return;
     }
 
@@ -89,26 +90,24 @@ export default function Form() {
     return false;
   };
 
-
-
-
   return (
     <div className={style.container}>
       <h1 className={style.letra}>Formulario de Actividades</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Name de la actividad:</label>
+          <label>Name de la Activity:</label>
           <input
             type="text"
             value={form.name}
             onChange={changeHandler}
             name='name'
+            className={style.inputs}
           />
         </div>
         {errors.name && <p className={style.errors}>{errors.name}</p>}
         <div>
-          <label>difficulty de la actividad:</label>
-          <select name="difficulty" value={form.difficulty} onChange={changeHandler} >
+          <label>difficulty de la activity:</label>
+          <select className={style.inputs} name="difficulty" value={form.difficulty} onChange={changeHandler} >
             <option value="defaul">asignar dificultad de la actividad</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -120,7 +119,7 @@ export default function Form() {
         {errors.difficulty && <p className={style.errors}>{errors.difficulty}</p>}
         <div>
           <label>season del country:</label>
-          <select name="season" value={form.season} onChange={changeHandler} >
+          <select className={style.inputs} name="season" value={form.season} onChange={changeHandler} >
             <option value="default">selecciona una season valida</option>
             <option value="Otoño">Otoño</option>
             <option value="Verano">Verano</option>
@@ -130,12 +129,13 @@ export default function Form() {
         </div>
         {errors.season && <p className={style.errors}>{errors.season}</p>}
         <div>
-          <label>duracion de la actividad:</label>
+          <label>duration de la activity:</label>
           <input
             type="text"
             value={form.duracion}
             name='duracion'
             onChange={changeHandler}
+            className={style.inputs}
           />
         </div>
         {errors.duracion && <p className={style.errors}>{errors.duracion}</p>}

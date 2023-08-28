@@ -14,7 +14,7 @@ export default function Home() {
      
     return(
         <div className={style.container}>
-            <h1 className={style.container}>Home</h1>
+            <h1 className={style.container}>welcome to the countries</h1>
             <Cards></Cards>
         </div>
     );

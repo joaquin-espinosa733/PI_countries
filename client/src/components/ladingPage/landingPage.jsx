@@ -6,7 +6,7 @@ export default function LandingPage(){
     return( 
     <div className={style.container}>
     <NavLink to={"/home"}>
-        <button>Ir al inicio</button>
+        <img  className={style.imagen} src="https://static.vecteezy.com/system/resources/previews/003/750/595/non_2x/world-planet-earth-free-vector.jpg" alt="button_al_home" />
     </NavLink>
     </div>
     )

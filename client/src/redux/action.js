@@ -3,23 +3,17 @@ import  {
     GET_DETAIL_COUNTRIES,
     GET_ACTIVITY,
     POST_ACTIVITY, 
-    SET_TOTAL_PAGES,
     SET_PAGE,
     FILTER_ACTIVITIES,
     FILTER_CONTINENTS
 } from "./action-type"
 import axios from "axios";
 
-
 export const getCountries= ()=> {
-    return async function(dispatch, getState) {
+    return async function(dispatch) {
         const apiCountries = await axios.get("http://localhost:3001/countries");
         const countries = apiCountries.data;
         dispatch({type:GET_COUNTRIES, payload: countries})
-        const totalItems = countries.length;
-        const itemsPerPage = getState().pagination.itemsPerPage;
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
-        dispatch({type: SET_TOTAL_PAGES, payload: totalPages});
     }
 }
 

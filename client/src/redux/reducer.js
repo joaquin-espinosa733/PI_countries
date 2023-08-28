@@ -1,7 +1,6 @@
 import {
     GET_COUNTRIES,
     GET_DETAIL_COUNTRIES,
-    SET_TOTAL_PAGES,
     GET_ACTIVITY,
     SET_PAGE,
     POST_ACTIVITY,
@@ -16,8 +15,6 @@ const initialState = {
     activity: [],
     pagination: {
         thisPage: 1,
-        totalPages: 0,
-        totalItems: 0,
         itemsPerPage: 10,
     }
 }
@@ -42,7 +39,7 @@ const rootReducer = (state = initialState, action) => {
             let filteredCountries = [];
 
             if (selectedContinent === "ALL") {
-                filteredCountries = state.countries; // Mostrar todos los países si se selecciona "ALL"
+                filteredCountries = state.countries; //* Mostrar todos los países si se selecciona "ALL"
             } else {
                 filteredCountries = state.countries.filter(country => country.region === selectedContinent);
             }
@@ -53,7 +50,7 @@ const rootReducer = (state = initialState, action) => {
             };
 
         case FILTER_ACTIVITIES:
-            // console.log("Estado antes del filtro:", state);
+
             if (action.payload === "default") {
                 return {
                     ...state,
@@ -64,21 +61,18 @@ const rootReducer = (state = initialState, action) => {
             const filteredByActivitys = state.countries.filter(country =>
                 country.activities.some(activity => activity.name === action.payload)
             );
-            // console.log("Países filtrados:", filtered);
+
             return {
                 ...state,
                 countriesSorted: filteredByActivitys
             }
-        case SET_TOTAL_PAGES:
-            return {
-                ...state,
-                pagination: { ...state.pagination, totalPages: action.payload }
-            };
+
         case SET_PAGE:
             return {
                 ...state,
                 pagination: { ...state.pagination, thisPage: action.payload },
             };
+
         default:
             return { ...state };
     }

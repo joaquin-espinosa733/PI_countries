@@ -1,4 +1,4 @@
-const {Activity,Country} = require("../db");
+const { Activity, Country } = require("../db");
 
 
 
@@ -17,7 +17,7 @@ const activitiesPost = async ({
     });
 
     if (!alreadyActivities) {
-        const activity = await Activity.create({ id,name, difficulty, duracion, season })
+        const activity = await Activity.create({ id, name, difficulty, duracion, season })
         await activity.addCountry(countryIds)
 
         let activityWithCountry = await Activity.findOne({
@@ -43,12 +43,12 @@ const activitiesPost = async ({
 
 
 
-const allActivities = async()=>{
-    const buscarActividades= await Activity.findAll({include: Country});
+const allActivities = async () => {
+    const buscarActividades = await Activity.findAll({ include: Country });
     return buscarActividades;
 }
 
 module.exports = {
-    activitiesPost, 
+    activitiesPost,
     allActivities
 }

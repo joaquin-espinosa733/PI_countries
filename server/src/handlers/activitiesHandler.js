@@ -1,7 +1,7 @@
-const {activitiesPost,allActivities} = require("../controllers/activitiesControllers")
+const { activitiesPost, allActivities } = require("../controllers/activitiesControllers")
 
 
-const traerActivities = async(req,res)=>{
+const traerActivities = async (req, res) => {
     try {
         const buscarActivities = await allActivities();
         return res.status(200).json(buscarActivities)
@@ -9,10 +9,10 @@ const traerActivities = async(req,res)=>{
         return res.status(404).json({ error: error.message })
     }
 }
-const crearActividades = async(req,res)=>{
-    const {id,name,difficulty,season,duracion,countryIds} = req.body;
+const crearActividades = async (req, res) => {
+    const { id, name, difficulty, season, duracion, countryIds } = req.body;
     try {
-        const  data= {id,name,difficulty,season,duracion,countryIds}
+        const data = { id, name, difficulty, season, duracion, countryIds }
         const creacion = await activitiesPost(data);
         return res.status(200).json(creacion)
     } catch (error) {
@@ -20,7 +20,7 @@ const crearActividades = async(req,res)=>{
     }
 }
 
-module.exports= {
+module.exports = {
     crearActividades,
     traerActivities
 };
