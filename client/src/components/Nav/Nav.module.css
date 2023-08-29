@@ -15,25 +15,6 @@
     padding: 0 0 28px;
 }
 
-/* .Link {
-    text-align: center;
-    background-color: #0979b0;
-    background-position: center;
-    border: 1px solid black;
-    width: 40px;
-    height: 23px;
-    border-radius: 3px;
-    color: black;
-    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size: 14px;
-    line-height: 23px;
-    text-decoration: none;
-    &:hover{
-        color: #272727;
-        text-shadow: none;
-        background-color: beige;
-    }
-} */
 .Link,
 .Link2 {
     text-align: center;
@@ -59,4 +40,6 @@
     color: white;
     font-size: 24px;
     margin: 0;
+    padding: 0 10px 30px;
+    Font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
