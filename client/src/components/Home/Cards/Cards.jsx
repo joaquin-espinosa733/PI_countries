@@ -122,7 +122,7 @@ export default function Cards() {
                     <option value="MIN">min population</option>
                 </select>
                 <div>
-                    <button className={style.button} onClick={resetFilters}>Reset filters</button>
+                    <button className={style.buttonReset} onClick={resetFilters}>Reset filters</button>
                 </div>
             </div>
             <div className={style.cardsContainer}>

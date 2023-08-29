@@ -67,3 +67,17 @@
         background-color: beige;
     }
 }
+
+.buttonReset{
+    display: flex;
+    border-radius: 5px;
+    height: 21px;
+    background-color: gray;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding-bottom: 10px;
+    &:hover{
+        color: #272727;
+        text-shadow: none;
+        background-color: beige;
+    }
+}

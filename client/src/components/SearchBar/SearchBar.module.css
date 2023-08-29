@@ -5,11 +5,11 @@
     width: 105px;
     height: 25px;
     margin-top: 0px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: 14px;
-    line-height: 5px;
+    line-height: 1px;
     background-color: #0979b0;
     color: black;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     &:hover {
         color: #272727;
         text-shadow: none;
@@ -18,9 +18,10 @@
 }
 
 .inputt input {
-    height: 25px;
+    height: 24px;
     border: 0px;
-    margin-top: 0px;
+    padding: 10px;
+    border:  1px solid #ccc;
     border-radius: 3px;
 }
 
