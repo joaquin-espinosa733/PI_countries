@@ -12,8 +12,8 @@
 }
 
 .filters{
-    background-color: gray;
-    color: white;
+    background-color: #7ad3be;
+    color: black;
     display: flex;
     max-width: 90px;
     max-height: 20px;
@@ -28,8 +28,8 @@
 
 .filter{
     display: flex;
-    background-color: gray;
-    color: white;
+    background-color: #7ad3be;
+    color: black;
     max-width: 90px;
     max-height: 20px;
     flex-wrap: wrap;
@@ -72,7 +72,8 @@
     display: flex;
     border-radius: 5px;
     height: 21px;
-    background-color: gray;
+    background-color: #2ca880;
+    color: black;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     padding-bottom: 10px;
     &:hover{
