@@ -9,16 +9,16 @@ export default function Cards() {
     //* el useDispatch lo vamos a utilizar para modificar el estado de redux, para enviar una accion al store.
     const dispatch = useDispatch();
     //* useSelector vamos a seleccionar porciones especificas del estado global y llevarlo a un componente funcional de react en este  caso Cards
-    const countriesSorted = useSelector((state) => state.countriesSorted)
-    const activity = useSelector((state) => state.activity);
     const countries = useSelector(state => state.countries);
+    const activity = useSelector((state) => state.activity);
+    const countriesSorted = useSelector((state) => state.countriesSorted)
     const itemsPerPage = useSelector((state) => state.pagination.itemsPerPage);
     const currentPage = useSelector((state) => state.pagination.thisPage);
 
     //* utilizamos use useState para añadir estados local a mi componente.
     const [selectedSorting, setSelectedSorting] = useState("");//! estado local del filtrado por "A"-"Z", "Z"-"A".
     const [selectedActivity, setSelectedActivity] = useState('');//! estado local para el filtrado de las actividades de los countries.
-    const [selectedContinent, setSelectedContinent] = useState("ALL");
+    const [selectedContinent, setSelectedContinent] = useState("ALL");//! estado local para el manejo del select de continent
     //*useEffect lo vamos autilizar para manejar el ciclo de vida del componente perimitiendo realizar efectos secundarios, EJ= manipulacion del DOM.
     useEffect(() => {
         dispatch(setPage(1));
@@ -31,6 +31,7 @@ export default function Cards() {
     }, [selectedActivity, dispatch])
 
     useEffect(() => {
+
         dispatch(getActivity()); //* Obtener las actividades creadas
     }, [dispatch]);
 
@@ -84,13 +85,13 @@ export default function Cards() {
         dispatch(setPage(updatedPage));
     }
 
-    const resetFilters = ()=> {
+    const resetFilters = () => {
         setSelectedSorting("");//* restablecer ordenamiento
         setSelectedActivity("");//* restablecer actividad
         setSelectedContinent("ALL");//* resetear el value del select de continent a "ALL"
         dispatch(filterContinents("ALL")); //*
         dispatch(setPage(1));//* reiniciar la pagina
-        }
+    }
 
     return (
         <div className={style.cardsContainer}>

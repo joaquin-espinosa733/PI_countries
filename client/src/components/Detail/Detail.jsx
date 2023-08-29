@@ -10,8 +10,15 @@ export default function Detail() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    //* variable para rastrear si el componente esta montado
+    let isMounted = true;
     dispatch(getCountriesDetail(id));
     dispatch(getActivity())
+    //* cancela las solicitudes pendientes si el componente se desmonta
+    return ()=> {
+      isMounted = false;
+    }
+    //* estamos pendiente si cambia nuestro ID
   }, [dispatch, id]);
 
   const state = useSelector((state) => state.detail);

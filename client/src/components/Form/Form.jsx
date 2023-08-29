@@ -6,16 +6,19 @@ import Validations from "./Validations"
 import style from "./Form.module.css"
 
 export default function Form() {
-  const countries = useSelector((state) => state.countries);//estado global donde contengo mis paises.
-  const navigate = useNavigate();
+  const countries = useSelector((state) => state.countries);//* estado global donde contengo mis paises.
+  const navigate = useNavigate();//* nos va a permitir la navegacion de rutas
   const dispatch = useDispatch();
 
-  useEffect(() => {//me tragio mi action getActivity quien me trae la data de mis actividades creadas. y tambien getCountries que me trae todos los paises.
+  //* hago un dispatch mi action getActivity quien me trae la data de mis actividades creadas. y tambien getCountries que me trae todos los paises.
+  useEffect(() => {
     dispatch(getCountries())
     dispatch(getActivity())
   }, [dispatch])
 
-  const [form, setForm] = useState({//creamos estado local donde guardamos la info que tiene nuestro posteo
+
+  //* creamos estado local donde guardamos la info que tiene nuestro posteo
+  const [form, setForm] = useState({
     name: "",
     difficulty: "",
     duracion: "",
@@ -23,45 +26,59 @@ export default function Form() {
     countryIds: []
   });
 
-  const [errors, setErrors] = useState({});// estado local que maneja los errores del form
 
-  const changeHandler = (event) => {// que me lo explique
+  //* estado local que maneja los errores del form
+  const [errors, setErrors] = useState({});
+
+  const changeHandler = (event) => {
+    //* La funcion recibe un objeto "event" que representa el evento de cambio
+    //* generado por un elemento de entrada, como un input
     setForm({
       ...form,
       [event.target.name]: event.target.value,
     });
+    //* aca actualizamos el estado "form" con una copia del estado actual,
+    //* y luego se actualiza la propiedad correspondiente a "event.target.name"
     setErrors(
       Validations({
         ...form,
         [event.target.name]: event.target.value,
       })
     );
+    //* aca usamos la funcion validations de mi archivo validations.js que tiene las validaciones de cada input
+    //* para verificar si el nuevo valor ingresado es valido. se pasa una copia del estado actual
+    //* y se actualiza la propiedad correspondiente. El resultado de la validacion se almacena en el estado "errors"
   }
-
-
-  const countrySelectedHandler = (event) => {//* funcion para la seleccion de paises
+  
+  //* esta funcion se llama cuando ocurre un evento de cambio(seleccion)
+  const countrySelectedHandler = (event) => {
+    //* se obtiene el valor seleccionado del elemento de entrada
     const selectedCountry = event.target.value;
+    //* se busca el pais seleccionado en el array de paises utilizando su ID
     const selectedCountrys = countries.find((country) => country.id === selectedCountry);
-
+    //* Si se encontro un pais coincidente
     if (selectedCountrys) {
+      //*si el ID del pais seleccionado ya esta en el array "countryIds" del estado "form":
       if (form.countryIds.includes(selectedCountrys.id)) {
         setForm({
           ...form,
           countryIds: form.countryIds.filter((id) => id !== selectedCountrys.id),
         });
+        //* se filtra el array de IDs para quitar el ID del pais seleccionado y luego actualiza el estado "form" con el nuevo array de IDs.
       } else {
         setForm({
           ...form,
           countryIds: [...form.countryIds, selectedCountrys.id],
         });
       }
+      //* se crea un nuevo array de IDs que incluye el ID del pais seleccionado y se actualiza el estado "form" con el nuevo array de IDs
     }
   };
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (/*si el input esta vacio que no submitee */
+    //*si el input esta vacio que no submitee *//
+    if (
       form.name.length === 0 ||
       form.difficulty.length === 0 ||
       form.duracion.length === 0 ||
@@ -69,13 +86,15 @@ export default function Form() {
     ) {
       return;
     }
-    if (form.countryIds.length === 0) { //* Validación para países seleccionados
-      alert("Selecciona al menos un país antes de enviar el formulario.");//! si no se selecciona alguno, larga una alert de que se tiene que seleccionar almenos un pais
+    //* Validación para países seleccionados
+    if (form.countryIds.length === 0) {
+      alert("Selecciona al menos un país antes de enviar el formulario.");
       return;
     }
-
-    if (!errors.name && !errors.difficulty && !errors.duracion && !errors.season) { //* si tiene errores que tampoco submitee
-      alert(`se ha creado la nueva actividad ${form.name}`)//* alert cuando se cree la actividad correctamente
+    //* si tiene errores que tampoco submitee
+    if (!errors.name && !errors.difficulty && !errors.duracion && !errors.season) {
+      alert(`se ha creado la nueva actividad ${form.name}`)
+      //* creamos un nuevo objeto llamado newActivity y guardamos las propiedades del estado local
       const newActivity = {
         name: form.name,
         difficulty: Number(form.difficulty),
@@ -83,9 +102,12 @@ export default function Form() {
         season: form.season,
         countryIds: form.countryIds,
       };
-      dispatch(postActivity(newActivity));//* hacemos un dispatch de nuestra action postActivity y le pasame la nueva actividad creada
-      dispatch(getCountries());//* me traigo a mis countries
-      const navigateToHome = navigate("/home", { replace: true });//* cuando submitee me manda al home
+      //* hacemos un dispatch de nuestra action postActivity y le pasamos la nueva actividad creada
+      dispatch(postActivity(newActivity));
+      //* me traigo la lista de mis countries haciendo uso de la accion dispatch(getCountries())
+      dispatch(getCountries());
+      //* cuando submitee me manda al home
+      const navigateToHome = navigate("/home", { replace: true });
       return navigateToHome;
     }
     return false;

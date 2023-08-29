@@ -15,7 +15,7 @@
 }
 
 .countryList{
-    max-height: 200px;/*altura maxima de la lista*/
+    max-height: 300px;/*altura maxima de la lista*/
     overflow-y: auto;/* Agrega una barra de desplazamiento vertical si el contenido excede la altura máxima */
     border: 1px solid #ddd;/* Borde de 1px con color gris claro */
     padding: 10px;/* Espacio de relleno (padding) alrededor del contenido interno */

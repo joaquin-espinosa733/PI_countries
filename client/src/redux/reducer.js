@@ -8,6 +8,7 @@ import {
     FILTER_CONTINENTS
 } from "./action-type";
 
+//* nuestro initialState de redux
 const initialState = {
     countries: [],
     countriesSorted: [],
@@ -24,8 +25,8 @@ const rootReducer = (state = initialState, action) => {
         case GET_COUNTRIES:
             return {
                 ...state,
+                countries: action.payload,
                 countriesSorted: action.payload,
-                countries: action.payload
             };
         case GET_DETAIL_COUNTRIES:
             return { ...state, detail: action.payload };
@@ -36,21 +37,19 @@ const rootReducer = (state = initialState, action) => {
 
         case FILTER_CONTINENTS:
             const selectedContinent = action.payload;
-            let filteredCountries = [];
 
+            let filteredCountries = [];
             if (selectedContinent === "ALL") {
                 filteredCountries = state.countries; //* Mostrar todos los países si se selecciona "ALL"
             } else {
                 filteredCountries = state.countries.filter(country => country.region === selectedContinent);
             }
-
             return {
                 ...state,
                 countriesSorted: filteredCountries
             };
 
         case FILTER_ACTIVITIES:
-
             if (action.payload === "default") {
                 return {
                     ...state,
@@ -65,7 +64,8 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 countriesSorted: filteredByActivitys
-            }
+            };
+
 
         case SET_PAGE:
             return {
