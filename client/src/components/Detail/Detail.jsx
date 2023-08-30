@@ -6,7 +6,7 @@ import style from "./Detail.module.css"
 
 
 export default function Detail() {
-  const { id } = useParams();
+  const { id } = useParams();//* nos permite acceder a los parametros de la URL en mi componente funcional
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function Detail() {
     dispatch(getCountriesDetail(id));
     dispatch(getActivity())
     //* cancela las solicitudes pendientes si el componente se desmonta
-    return ()=> {
+    return () => {
       isMounted = false;
     }
     //* estamos pendiente si cambia nuestro ID
@@ -54,6 +54,7 @@ export default function Detail() {
               <p>difficulty: {activity.difficulty}</p>
               <p>duracion: {activity.duracion}</p>
               <p>season: {activity.season}</p>
+              {/* //*subrayado */}
               <div className={style.subrayado}></div>
             </div>
           ))}

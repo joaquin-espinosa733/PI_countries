@@ -14,6 +14,7 @@ export const getCountries= ()=> {
     return async function(dispatch) {
         const apiCountries = await axios.get("http://localhost:3001/countries");
         const countries = apiCountries.data;
+        //* payload la informacion que mandamos a los reducer:
         dispatch({type:GET_COUNTRIES, payload: countries})
     }
 }

@@ -30,12 +30,16 @@ export default function Form() {
   //* estado local que maneja los errores del form
   const [errors, setErrors] = useState({});
 
+
+  //* La funcion recibe un objeto "event" que representa el evento de cambio
+  //* esta funcion va a manejar eventos de cambio generados por elementos de entradas en mi caso inputs
   const changeHandler = (event) => {
-    //* La funcion recibe un objeto "event" que representa el evento de cambio
-    //* generado por un elemento de entrada, como un input
+    //*setForm es de mi estado local que tiene las propiedades de mi post
     setForm({
       ...form,
+      //* buscamos la clave dinamica de la propiedad name y le asignamos el value que tiene nuestro event
       [event.target.name]: event.target.value,
+      //* los corchetes los usamos para acceder a las propiedades de un objeto
     });
     //* aca actualizamos el estado "form" con una copia del estado actual,
     //* y luego se actualiza la propiedad correspondiente a "event.target.name"
@@ -49,12 +53,12 @@ export default function Form() {
     //* para verificar si el nuevo valor ingresado es valido. se pasa una copia del estado actual
     //* y se actualiza la propiedad correspondiente. El resultado de la validacion se almacena en el estado "errors"
   }
-  
+
   //* esta funcion se llama cuando ocurre un evento de cambio(seleccion)
   const countrySelectedHandler = (event) => {
     //* se obtiene el valor seleccionado del elemento de entrada
     const selectedCountry = event.target.value;
-    //* se busca el pais seleccionado en el array de paises utilizando su ID
+    //* se busca el pais seleccionado en el array de paises utilizando su ID y que cumpla con la condicion especifica con el metodo find y si no lo encuentra larga undefined:
     const selectedCountrys = countries.find((country) => country.id === selectedCountry);
     //* Si se encontro un pais coincidente
     if (selectedCountrys) {
@@ -62,9 +66,9 @@ export default function Form() {
       if (form.countryIds.includes(selectedCountrys.id)) {
         setForm({
           ...form,
+          //* se filtra el array de IDs para quitar el ID del pais seleccionado y luego actualiza el estado "form" con el nuevo array de IDs.
           countryIds: form.countryIds.filter((id) => id !== selectedCountrys.id),
         });
-        //* se filtra el array de IDs para quitar el ID del pais seleccionado y luego actualiza el estado "form" con el nuevo array de IDs.
       } else {
         setForm({
           ...form,
@@ -76,6 +80,7 @@ export default function Form() {
   };
 
   const handleSubmit = (event) => {
+    //* event.preventDefault previene comportamientos predeterminado de un evento en un elemento HTML:
     event.preventDefault();
     //*si el input esta vacio que no submitee *//
     if (
@@ -107,21 +112,24 @@ export default function Form() {
       //* me traigo la lista de mis countries haciendo uso de la accion dispatch(getCountries())
       dispatch(getCountries());
       //* cuando submitee me manda al home
-      const navigateToHome = navigate("/home", { replace: true });
+      const navigateToHome = navigate("/home");
       return navigateToHome;
     }
+    //* previene que el formulario se envie si ciertas condiciones no se cumplen
     return false;
   };
 
   return (
     <div className={style.container}>
       <h1 className={style.letra}>Formulario de Actividades</h1>
+      {/* //* el atributo onSubmit se utiliza en un elemento de form para especificar la funcion que se ejecutara */}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name de la Activity:</label>
           <input
             type="text"
             value={form.name}
+            //* cuando se escribe algo en el input osea un cambio se llama a la funcion changeHandler
             onChange={changeHandler}
             name='name'
             className={style.inputs}

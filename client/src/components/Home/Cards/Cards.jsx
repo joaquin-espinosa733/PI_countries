@@ -17,13 +17,14 @@ export default function Cards() {
 
     //* utilizamos use useState para añadir estados local a mi componente.
     const [selectedSorting, setSelectedSorting] = useState("");//! estado local del filtrado por "A"-"Z", "Z"-"A".
-    const [selectedActivity, setSelectedActivity] = useState('');//! estado local para el filtrado de las actividades de los countries.
+    const [selectedActivity, setSelectedActivity] = useState("");//! estado local para el filtrado de las actividades de los countries.
     const [selectedContinent, setSelectedContinent] = useState("ALL");//! estado local para el manejo del select de continent
     //*useEffect lo vamos autilizar para manejar el ciclo de vida del componente perimitiendo realizar efectos secundarios, EJ= manipulacion del DOM.
     useEffect(() => {
         dispatch(setPage(1));
-        if (selectedActivity === '' || selectedActivity === "default") {
-            dispatch(getCountries()); //* Mostrar todos los países al principios si el value es default o string vacio.
+        if (selectedActivity === "" || selectedActivity === "default") {
+            //* Mostrar todos los países al principios si el value es default o string vacio.
+            dispatch(getCountries()); 
         } else {
             dispatch(filterActivities(selectedActivity));
         }
@@ -31,16 +32,19 @@ export default function Cards() {
     }, [selectedActivity, dispatch])
 
     useEffect(() => {
-
-        dispatch(getActivity()); //* Obtener las actividades creadas
+    //* Obtener las actividades creadas
+        dispatch(getActivity()); 
     }, [dispatch]);
 
     const filterByActivity = e => {
+        //* accedemos al evento con target.value, target en quien tiene info del evento y value donde se contiene el valor ingresado
         const activity = e.target.value;
+        //* vamos a actualizar el estado pasandole nuestro value
         setSelectedActivity(activity);
-        dispatch(setPage(1)); //* Reiniciar la página a la primer pagina
+        //* Reiniciar la página a la primer pagina
+        dispatch(setPage(1)); 
         if (activity === "default") {
-            dispatch(filterActivities('', countries)); //* Mostrar todos los países al seleccionar "default"
+            dispatch(filterActivities("", countries)); //* Mostrar todos los países al seleccionar "default"
         } else {
             dispatch(filterActivities(activity, countriesSorted)); //* Aplicar filtro de actividad
         }
@@ -58,12 +62,14 @@ export default function Cards() {
     const totalUsedPages = Math.max(totalFilteredPages, 1); //* Asegura que totalUsedPages no sea menor que 1
 
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = Math.min(startIndex + itemsPerPage, totalFilteredItems);
+    const startIndex = (currentPage - 1) * itemsPerPage;//* se calcula para determinar el indice en el que comienza la lista de paises de la pagina actual
+    //* Math.min()toma dos argumentos y devulve el valor mas pequeño
+    const endIndex = Math.min(startIndex + itemsPerPage, totalFilteredItems);//* se calcula para determinar el indice en el que termina la lista de paises que se mostrara en la pagina actual
 
 
     //! esta funcion va hacer el filtrado de ordenamiento de "A" a la "Z", De la "Z" a la "A", y de max y min poblacion del pais
     const sortCountries = (countries, sortOrder) => {
+        //* slice nos da una copia del array de paises y despues hacemos el sort para ordenar como queramos esa copia del array:
         return countries.slice().sort((a, b) => {
             switch (sortOrder) {
                 case "A":
@@ -71,9 +77,9 @@ export default function Cards() {
                 case "Z":
                     return b.name.localeCompare(a.name);
                 case "MAX":
-                    return b.population - a.population;
+                    return b.population - a.population;//* obtendremos un orden descendentes con mayor poblacion primero(aca da numero negativo)
                 case "MIN":
-                    return a.population - b.population;
+                    return a.population - b.population;//* obtendremos un orden ascendente con la menos poblacion primero(aca numero positivo)
                 default:
                     return 0;
             }
@@ -81,6 +87,7 @@ export default function Cards() {
     }
 
     const handlePageChange = (newPage) => {
+        //* Math.max para asegurar que la pagina no sea menor a 1 y Math.min para asegurarse de que la pagina no sea mayor que totalUsedPages(numero total de paginas disponibles)
         const updatedPage = Math.max(Math.min(newPage, totalUsedPages), 1);
         dispatch(setPage(updatedPage));
     }
@@ -89,14 +96,14 @@ export default function Cards() {
         setSelectedSorting("");//* restablecer ordenamiento
         setSelectedActivity("");//* restablecer actividad
         setSelectedContinent("ALL");//* resetear el value del select de continent a "ALL"
-        dispatch(filterContinents("ALL")); //*
+        dispatch(filterContinents("ALL")); //* pasamos ALL por parametros para resetear el estado global
         dispatch(setPage(1));//* reiniciar la pagina
     }
 
     return (
         <div className={style.cardsContainer}>
             <div className={style.filtrados}>
-                {/*onChange es un evento en js y se ejecuta una funcion que especificas, en este caso, pasamos una call back y que cuando se ejecute "filterBycontinent" valla a la propiedad e.target.value y realize el filtro del continente que le pido. */}
+                {/* //*onChange es un evento en js y se ejecuta una funcion que especificas, en este caso,pasamos "filterBycontinent" valla a la propiedad e.target.value y realize el filtro del continente que le pido. */}
                 <select className={style.filters} onChange={filterByContinent} value={selectedContinent}>
                     <option value="ALL" onClick={filterByContinent}>ALL</option>
                     <option value="Asia" onClick={filterByContinent}>ASIA</option>
@@ -106,22 +113,27 @@ export default function Cards() {
                     <option value="Europe" onClick={filterByContinent}>EUROPE</option>
                     <option value="Oceania" onClick={filterByContinent}>OCEANIA</option>
                 </select>
+
                 <select onChange={filterByActivity} value={selectedActivity} className={style.filters}>
                     <option value="default">Select an activity</option>
+                    {/* //* el .map nos va a permitir iterar el array y generar elementos <option></option> dentro del elemento <select></select> en base a lo que me trae el array */}
                     {Array.isArray(activity) && activity.map((act) => (
                         <option key={act.id} value={act.name}>{act.name}</option>
                     ))}
                 </select>
+
                 <select className={style.filter} value={selectedSorting} onChange={(e) => setSelectedSorting(e.target.value)}>
                     <option value="default">default</option>
                     <option value="A">A-Z</option>
                     <option value="Z">Z-A</option>
                 </select>
+
                 <select className={style.filter} value={selectedSorting} onChange={(e) => setSelectedSorting(e.target.value)}>
                     <option value="">default</option>
                     <option value="MAX">max population</option>
                     <option value="MIN">min population</option>
                 </select>
+
                 <div>
                     <button className={style.buttonReset} onClick={resetFilters}>Reset filters</button>
                 </div>
@@ -130,7 +142,8 @@ export default function Cards() {
                 {
                     sortCountries(countriesSorted, selectedSorting)//* se llama a la funcion sortCountries, con el array de paises filtrados y el estado local de ordenamiento.
                         .slice(startIndex, endIndex)//*despues de ordenar los paises, se utiliza slice para obtener un array que son los elementos que deben mostrarse en la pagina actual de principio asta el final
-                        .map((coun) => //* y para terminar un map al array de paises ordenados y paginados
+                        //* y para terminar un map al array de paises ordenados
+                        .map((coun) => 
                             <Card
                                 key={coun.id}
                                 id={coun.id}
@@ -144,6 +157,7 @@ export default function Cards() {
                             />)
                 }
             </div>
+
             <div className={style.paginationContainer}>
                 <div className={style.pagination}>
                     <button className={style.button} onClick={() => handlePageChange(currentPage - 1)}> Previous </button>

@@ -39,6 +39,7 @@ const rootReducer = (state = initialState, action) => {
             const selectedContinent = action.payload;
 
             let filteredCountries = [];
+            
             if (selectedContinent === "ALL") {
                 filteredCountries = state.countries; //* Mostrar todos los países si se selecciona "ALL"
             } else {

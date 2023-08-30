@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getCountriesDetail } from "../../../redux/action";
 import style from "../Card/Card.module.css"
 
-export default function Card({id,flags,name,region,actividad}){
+export default function Card({id,flags,name,region}){
 
     const dispatch = useDispatch();
     const navigate = useNavigate();

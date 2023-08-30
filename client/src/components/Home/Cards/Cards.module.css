@@ -1,10 +1,15 @@
 .cardsContainer {
+    /* //* display:flex establece un contenedor flexible, nos permite controlar la disposicion y alineacion de los elementos hijos dentro de el */
     display: flex;
+    /* //* esta propiedad permite que se envuelva a lineas multiples*/
     flex-wrap: wrap;
+    /* //*esta propiedad controla la alineacion a lo largo del eje, en este caso alinea al primer elemento al inicio del contenedor y el ultimo elemento se alineara al final del contendor*/
     justify-content: space-between;
+    /* //*establece el ancho del elemento*/
     max-width: 1180px;
-    /* Ajusta el valor según tu diseño */
+    /* //*margen es el espacio exterior alrededor de un elemento*/
     margin: 0 auto;
+    /* //*color de fondo*/
     background-color: #0979b0;
 }
 
@@ -17,13 +22,15 @@
     color: black;
     display: flex;
     max-width: 90px;
+    /* //*altura de un elemento*/
     max-height: 20px;
     flex-wrap: wrap;
+    /* //*esta propiedad establece la direccion en la que se alinearan los elemnetos hijos dentro del contenedor flexible: "row": por defecto*/
     flex-direction: row;
     justify-content: space-between;
     border-radius: 5px;
 }
-
+/* //*hover lo que hace es aplicar estilos a un elemento cuando el cursor del mouse se coloca sobre el*/
 .filters:hover {
     border-color: white;
 }
@@ -48,6 +55,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    /* //* vh representa el porcentaje del alto del area visible del navegador, este caso 100vh seria 100%del alto de la ventana*/
     height: 100vh;
 }
 
@@ -68,6 +76,7 @@
 
     &:hover {
         color: #272727;
+        /* //*sin sombras*/
         text-shadow: none;
         background-color: beige;
     }
@@ -79,6 +88,7 @@
     height: 21px;
     background-color: #ff3816;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    /* //* se utiliza para establecer el espaciado en la parte inferior de un elemento*/
     padding-bottom: 10px;
 
     &:hover {

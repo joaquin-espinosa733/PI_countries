@@ -1,11 +1,10 @@
-const axios = require("axios");
 const { Country, Activity } = require("../db");
 //* importamos oP de la biblioteca de sequelize para poder hacer condiciones y comparaciones:
 const { Op } = require('sequelize');
 
 //* controller "getCountries" que busca los paises en nuestra DB:
 const getCountries = async () => {
-  //* creamos una varibale allCountries y guardamos y buscamos en la tabla country de mi base de datos los attributes requeridos:
+  //* creamos una varibale allCountries y guardamos y buscamos en la tabla country de mi base de datos con findAll que podemos leer la tabla completa y los attributes requeridos:
   const allCountries = await Country.findAll({
     attributes: ['id', 'name', 'flags', 'region', 'capital', 'subregion', 'area', 'population'],
     //* y que tambien incluya los attributes de mi tabla de activity:
