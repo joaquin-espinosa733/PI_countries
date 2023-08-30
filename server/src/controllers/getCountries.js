@@ -1,10 +1,11 @@
 const axios = require("axios");
 const { Country, Activity } = require("../db");
+//* importamos oP de la biblioteca de sequelize para poder hacer condiciones y comparaciones:
 const { Op } = require('sequelize');
 
-
+//* controller "getCountries" que busca los paises en nuestra DB:
 const getCountries = async () => {
-  //* buscamos en la tabla country de mi base de datos los attributes requeridos:
+  //* creamos una varibale allCountries y guardamos y buscamos en la tabla country de mi base de datos los attributes requeridos:
   const allCountries = await Country.findAll({
     attributes: ['id', 'name', 'flags', 'region', 'capital', 'subregion', 'area', 'population'],
     //* y que tambien incluya los attributes de mi tabla de activity:
@@ -21,24 +22,24 @@ const getCountries = async () => {
 
 const getCountrieById = async (id) => {
   //* hacemos una busqueda con findByPk para buscar la primary key en este caso la ID
-  const buscarPorId = await Country.findByPk(id, {
+  const searchForId = await Country.findByPk(id, {
     //* incluimos los attributes de mi tabla "Activity"
     include: {
       model: Activity,
       attributes: ['name', 'difficulty', 'season', 'duracion'],
     },
   });
-  return buscarPorId;
+  return searchForId;
 }
 
 const getCountriesByName = async (name) => {
   //* buscamos por name en nuestra DB
-  const buscaElNombre = await Country.findAll({
+  const searchByName = await Country.findAll({
     where: {
       name: {
-        //* busqueda de cadena insensible a mayusculas y minusculas(case-insentive) en la DB
-        //* `%${name}%` % Lo utilizamos como comodin de patron de busqueda que inda que puede hacer cero o mas caracteres antes o despues del valor de busqueda
-        [Op.iLike]: `%${name}%`
+        //* [Op.iLike]: busqueda de cadena insensible a mayusculas y minusculas(case-insentive) en la DB
+        //* `%${name}%` % Lo utilizamos como comodin de patron de busqueda que puede ser cero o mas caracteres antes o despues del valor de busqueda
+        [Op.iLike]: name
       },
     },
     //* incluimos los attributes de mi tabla "Activity"
@@ -49,10 +50,10 @@ const getCountriesByName = async (name) => {
     }
   })
   //* si no pone ningun name, retornamos null para manejar el error de que no puse un nombre
-  if (buscaElNombre.length === 0) {
+  if (searchByName.length === 0) {
     return null;
   }
-  return buscaElNombre
+  return searchByName
 }
 
 
