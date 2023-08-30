@@ -10,6 +10,7 @@ import  {
 import axios from "axios";
 
 export const getCountries= ()=> {
+    //* parametro: dispatch, es una funcion de redux que se utiliza para enviar acciones al  reducer y actulizar el estado
     return async function(dispatch) {
         const apiCountries = await axios.get("http://localhost:3001/countries");
         const countries = apiCountries.data;
@@ -55,8 +56,8 @@ export const filterContinents = (payload) =>{
         payload,
     }
 }
-
-export const setPage = (page)=>{
+//* vamos a utilizar setPage para cambiar el numero de pagina actual en la paginacion
+export const setPage = (page)=>{//* "page" representa el numero de pagina al que deseas cambiar
     return {
         type: SET_PAGE,
         payload: page,

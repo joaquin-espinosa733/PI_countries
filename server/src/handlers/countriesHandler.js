@@ -6,10 +6,10 @@ const allCoontruies = async (req, res) => {
   try {
     if (name) {
       //* si nombre existe se le pide al controller que busque en db
-      const traerPorNombre = await getCountriesByName(name);
-      if (traerPorNombre) {
-        return res.status(200).json(traerPorNombre);
-      } else if(traerPorNombre === null){
+      const bringByName = await getCountriesByName(name);
+      if (bringByName) {
+        return res.status(200).json(bringByName);
+      } else if(bringByName === null){
         return res.status(404).send(`${name} no fue encontrado`);
       }
     } else {

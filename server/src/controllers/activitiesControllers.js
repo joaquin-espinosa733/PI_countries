@@ -3,7 +3,7 @@ const { Activity, Country } = require("../db");
 
 
 const activitiesPost = async ({
-    //* pasamos por params, las propiedades que queremos postear
+    //* pasamos por params un objeto, las propiedades que queremos desestructurar y postear
     id,
     name,
     difficulty,
@@ -13,7 +13,9 @@ const activitiesPost = async ({
 }) => {
     //*buscamos una instancia del modelos "Activity" con findOne en la DB de la columna "name" coinciden con el valor proporcionado en la variable "name"
     const alreadyActivities = await Activity.findOne({
+        //* el where nos va a servir para filtrar una busqueda en nuestra tabla activity, en este caso queremos buscar name:
         where: {
+        //*clave(se refiere al campo name de la tabla activity)-valor(el que pasamos por parametros)
             name: name,
         },
     });
@@ -22,8 +24,8 @@ const activitiesPost = async ({
         const activity = await Activity.create({ id, name, difficulty, duracion, season })
         //* asociamos paises a la actividad haciendo la relacion entre "activity" y "country"
         await activity.addCountry(countryIds)
-
-        let activityWithCountry = await Activity.findOne({
+        //*despues de crear la actividad y asociar los paises, hacemos una busqueda para obtener la actividad recien creada con la info de los paises asociados.
+        let activitySearch = await Activity.findOne({
             where: {
                 name: name
             },
@@ -34,14 +36,16 @@ const activitiesPost = async ({
             //* incluimos nuestro modelo "Country"
             include: {
                 model: Country,
+                //* through se utiliza cuando se configura una asociacion de muchos a muchos:
                 through: {
-                    attributes: []
+                    attributes: []//* no trae nada de la tabla intermedia:
                 }
             }
         })
-        return activityWithCountry
+        //* retorna la actividad recien creada junto con la info de los paises
+        return activitySearch
     }
-    //* asocioamos la actividad existente al pais que corresponda
+    //* asociamos la actividad existente al pais que corresponda y creamos una entrada a la tabla intermedia
     const activityWithCountry = await alreadyActivities.addCountry(countryIds);
 
     return activityWithCountry
@@ -51,8 +55,8 @@ const activitiesPost = async ({
 
 const allActivities = async () => {
     //* hacemos una busqueda general de nuestra tabla "Activity" y incluimos tambien nuestra tabla " Country"
-    const buscarActividades = await Activity.findAll({ include: Country });
-    return buscarActividades;
+    const bringActivities = await Activity.findAll({ include: Country });
+    return bringActivities;
 }
 
 module.exports = {

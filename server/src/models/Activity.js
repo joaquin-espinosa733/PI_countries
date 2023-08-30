@@ -5,8 +5,8 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('activity', {
     id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,//* identificador unico universal
+      defaultValue: DataTypes.UUIDV4,//* algoritmo que  crea identificadores unicos aleatorios
       primaryKey: true,
       allowNull: false,
     },
@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        isInt: true,
+        isInt: true,//* valida que se entero
         min: 1,
         max: 5
       },
@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
       allowNull: true
     },
     season: {
-      type: DataTypes.ENUM('Verano', 'Otoño', 'Invierno', 'Primavera'),
+      type: DataTypes.ENUM('Verano', 'Otoño', 'Invierno', 'Primavera'),//* ENUM: conjunto de valores permitidos
       allowNull: false,
     }
   });

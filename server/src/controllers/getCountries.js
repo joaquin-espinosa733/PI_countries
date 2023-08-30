@@ -12,7 +12,7 @@ const getCountries = async () => {
     include: {
       model: Activity,
       attributes: ['name', 'difficulty', 'duracion', 'season'],
-      through: { attributes: [] },//* Indica que no desea incluir información de la tabla intermedia que relaciona las tablas de Países y Actividades.
+      through: { attributes: [] },//* el atributo through + attributes y le asignamos un array vacio Indica que no desea incluir información de la tabla intermedia que relaciona las tablas de Países y Actividades.
     }
   });
   return allCountries;

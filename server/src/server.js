@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 
 const server = express();
-
+//* middlerwers
 server.use(morgan("dev"));
 server.use(express.json());
 server.use(cors());

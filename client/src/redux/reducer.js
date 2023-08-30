@@ -56,7 +56,7 @@ const rootReducer = (state = initialState, action) => {
                     countriesSorted: state.countries
                 };
             }
-
+            //* con el SOME en el array de  actividades de  cada pais vamos a verificar si al menos una actividad tiene un nombre que coincide con el valor de "action.payload"
             const filteredByActivitys = state.countries.filter(country =>
                 country.activities.some(activity => activity.name === action.payload)
             );
