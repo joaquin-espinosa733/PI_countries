@@ -145,35 +145,23 @@ export default function Cards() {
                 }
             </div>
             <div className={style.paginationContainer}>
-    <div className={style.pagination}>
-        <button className={style.button} onClick={() => handlePageChange(currentPage - 1)}>Anterior</button>
-        
-        {/* Mostrar números de página */}
-        {Array.from({ length: totalUsedPages }, (_, index) => {
-            // Calcular el rango de números de página a mostrar
-            const lowerBound = Math.max(currentPage - 2, 1);
-            const upperBound = Math.min(currentPage + 2, totalUsedPages);
+                <div className={style.pagination}>
+                    <button className={style.button} onClick={() => handlePageChange(currentPage - 1)}>Anterior</button>
 
-            // Mostrar solo los números de página dentro del rango
-            if (index + 1 >= lowerBound && index + 1 <= upperBound) {
-                return (
-                    <button
-                        key={index}
-                        className={`${style.button} ${currentPage === index + 1 ? style.activePage : ''}`}
-                        onClick={() => handlePageChange(index + 1)}
-                    >
-                        {index + 1}
-                    </button>
-                );
-            }
-            
-            return null; // No mostrar este número de página
-        })}
-        
-        <button className={style.button} onClick={() => handlePageChange(currentPage + 1)}>Siguiente</button>
-    </div>
-</div>
+                    {/* Mostrar números de página */}
+                    {Array.from({ length: totalUsedPages }, (_, index) => (
+                        <button
+                            key={index}
+                            className={`${style.button} ${currentPage === index + 1 ? style.activePage : ''}`}
+                            onClick={() => handlePageChange(index + 1)}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
 
+                    <button className={style.button} onClick={() => handlePageChange(currentPage + 1)}>Siguiente</button>
+                </div>
+            </div>
         </div>
     );
 }
