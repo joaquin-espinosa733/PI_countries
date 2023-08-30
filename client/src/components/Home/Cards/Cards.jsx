@@ -146,20 +146,11 @@ export default function Cards() {
             </div>
             <div className={style.paginationContainer}>
                 <div className={style.pagination}>
-                    <button className={style.button} onClick={() => handlePageChange(currentPage - 1)}>Anterior</button>
-
-                    {/* Mostrar números de página */}
-                    {Array.from({ length: totalUsedPages }, (_, index) => (
-                        <button
-                            key={index}
-                            className={`${style.button} ${currentPage === index + 1 ? style.activePage : ''}`}
-                            onClick={() => handlePageChange(index + 1)}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
-
-                    <button className={style.button} onClick={() => handlePageChange(currentPage + 1)}>Siguiente</button>
+                    <button className={style.button} onClick={() => handlePageChange(currentPage - 1)}> Previous </button>
+                    <p>
+                        Page {currentPage} of {totalFilteredPages}
+                    </p>
+                    <button className={style.button} onClick={() => handlePageChange(currentPage + 1)}>Next</button>
                 </div>
             </div>
         </div>
