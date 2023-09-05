@@ -15,14 +15,14 @@
 }
 
 .countryList{
-    max-height: 300px;/*altura maxima de la lista*/
-    overflow-y: auto;/* Agrega una barra de desplazamiento vertical si el contenido excede la altura máxima */
-    border: 1px solid #ddd;/* Borde de 1px con color gris claro */
-    padding: 10px;/* Espacio de relleno (padding) alrededor del contenido interno */
+    max-height: 300px;/* //*altura maxima de la lista*/
+    overflow-y: auto;/* //* Agrega una barra de desplazamiento vertical si el contenido excede la altura máxima */
+    border: 1px solid #ddd;/* //* Borde de 1px con color gris claro */
+    padding: 10px;/* //* Espacio de relleno (padding) alrededor del contenido interno */
 }
 
 .countryLabel {
-    display: block;/*esta propiedad cambia el elemento a un elemento de bloque. los de bloque ocupan todo el ancho disponible y comienzan en una nueva linea*/
+    display: block;/* //*esta propiedad cambia el elemento a un elemento de bloque. los de bloque ocupan todo el ancho disponible y comienzan en una nueva linea*/
     margin-bottom: 5px;
 }
 

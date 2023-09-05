@@ -38,7 +38,7 @@ module.exports = (sequelize) => {
     area: {
       type: DataTypes.INTEGER,
       allowNull: true
-    }
+    },
   }, {
     tableName: 'country', //* Especifica el nombre de la tabla
     freezeTableName: true, //* Evita que Sequelize pluralice el nombre

@@ -1,20 +1,43 @@
+const axios = require("axios");
 const { Country, Activity } = require("../db");
 //* importamos oP de la biblioteca de sequelize para poder hacer condiciones y comparaciones:
 const { Op } = require('sequelize');
 
 //* controller "getCountries" que busca los paises en nuestra DB:
 const getCountries = async () => {
-  //* creamos una varibale allCountries y guardamos y buscamos en la tabla country de mi base de datos con findAll que podemos leer la tabla completa y los attributes requeridos:
-  const allCountries = await Country.findAll({
+  const allCountries = await axios.get("http://localhost:5000/countries");
+  const resultados = allCountries.data;
+  const traigoTodo = resultados.map((element) => ({
+    id: element.cca3,
+    name: element.name.common,
+    flags: element.flags.png,
+    region: element.region,
+    capital: Array.isArray(element.capital) ? element.capital[0] : element.capital,
+    population: element.population,
+    subregion: element.subregion,
+    area: element.area,
+  }));
+
+  const savedCountries = await Country.findAll({
     attributes: ['id', 'name', 'flags', 'region', 'capital', 'subregion', 'area', 'population'],
-    //* y que tambien incluya los attributes de mi tabla de activity:
     include: {
       model: Activity,
       attributes: ['name', 'difficulty', 'duracion', 'season'],
-      through: { attributes: [] },//* el atributo through + attributes y le asignamos un array vacio Indica que no desea incluir información de la tabla intermedia que relaciona las tablas de Países y Actividades.
+      through: { attributes: [] },//Indica que no desea incluir información de la tabla intermedia que relaciona las tablas de Países y Actividades.
     }
+  }); // Obtén los países guardados en la base de datos
+
+  // Compara los ids de los países guardados con los nuevos datos para que no haiga duplicados
+  const newCountries = traigoTodo.filter((newCountry) =>
+    !savedCountries.some((savedCountry) => savedCountry.id === newCountry.id)
+  );
+
+  // Inserta los nuevos países en la base de datos
+  const savedOrUpdatedCountries = await Country.bulkCreate(newCountries, {
+    updateOnDuplicate: ["name", "flags", "region", "capital", "population", "subregion", "area"]
   });
-  return allCountries;
+
+  return [...savedOrUpdatedCountries, ...savedCountries];// retorna los
 };
 
 
